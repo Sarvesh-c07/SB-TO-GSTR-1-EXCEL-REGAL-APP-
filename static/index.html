@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Regal Extract - Customs PDF to Living Excel</title>
+  <meta name="description" content="Private rule-based ICEGATE PDF extraction into an editable Excel master.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain"></div>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="crest">R</span><span>Regal Extract</span></a>
+    <div class="privacy"><span class="dot"></span> Local & private · No API</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">CUSTOMS DOCUMENT AUTOMATION</p>
+        <h1>From highlighted PDFs<br>to a <em>living Excel master.</em></h1>
+        <p class="lede">Extract ICEGATE shipping-bill values, preserve USD/EUR symbols, calculate INR with a live Excel formula, and append without touching your manual columns.</p>
+        <div class="hero-pills">
+          <span>Rule-based</span><span>Offline</span><span>Editable output</span><span>Duplicate-safe</span>
+        </div>
+      </div>
+      <aside class="seal-card">
+        <div class="seal">₹</div>
+        <strong>INR stays live</strong>
+        <p>The INR cell is written as<br><code>Foreign Amount × Exchange Rate</code></p>
+      </aside>
+    </section>
+
+    <section class="workflow">
+      <div class="section-heading">
+        <div><span class="kicker">01</span><h2>Master workbook</h2></div>
+        <span id="masterBadge" class="badge muted">Not configured</span>
+      </div>
+      <div class="master-grid">
+        <label class="master-option">
+          <span class="option-icon">↥</span>
+          <span><strong>Use existing master</strong><small>Manual columns, formulas and formatting remain in place.</small></span>
+          <input id="masterFile" type="file" accept=".xlsx">
+          <button id="useMaster" class="button secondary" type="button">Choose Excel file</button>
+        </label>
+        <button id="newMaster" class="master-option new-option" type="button">
+          <span class="option-icon">✦</span>
+          <span><strong>Start a new master</strong><small>Create a polished workbook in your exact 14-column arrangement.</small></span>
+          <span class="button secondary">Create master</span>
+        </button>
+        <div id="masterInfo" class="master-status">
+          <span class="status-orb">—</span>
+          <div><strong>Waiting for a workbook</strong><small>Choose your existing file or create a fresh one.</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="workflow">
+      <div class="section-heading">
+        <div><span class="kicker">02</span><h2>Customs PDFs</h2></div>
+        <span id="pdfCount" class="badge">0 files</span>
+      </div>
+      <label id="dropZone" class="drop-zone">
+        <input id="pdfFiles" type="file" accept="application/pdf,.pdf" multiple>
+        <span class="upload-mark">PDF</span>
+        <strong>Drop ICEGATE shipping bills here</strong>
+        <small>or click to browse · multiple PDFs supported</small>
+        <span class="button primary">Select PDFs</span>
+      </label>
+      <div id="fileList" class="file-list"></div>
+      <div class="action-row">
+        <p><span class="mini-lock">◆</span> Files are processed only on this computer.</p>
+        <button id="extractButton" class="button primary wide" type="button" disabled>Extract highlighted fields</button>
+      </div>
+    </section>
+
+    <section id="reviewSection" class="workflow hidden">
+      <div class="section-heading">
+        <div><span class="kicker">03</span><h2>Review before append</h2></div>
+        <span id="confidenceBadge" class="badge success">—</span>
+      </div>
+      <div class="legend">
+        <span><i class="swatch extracted"></i>Extracted / editable</span>
+        <span><i class="swatch formula"></i>Excel formula</span>
+        <span><i class="swatch warning"></i>Needs a glance</span>
+      </div>
+      <div class="table-shell">
+        <table id="reviewTable">
+          <thead><tr>
+            <th>Particulars</th><th>Bill No.</th><th>Date</th><th>SB No.</th><th>SB Date</th><th>Port</th>
+            <th>Currency</th><th>Foreign Amount</th><th>Exch. Rate</th><th>INR</th><th>Value@5%</th>
+            <th>IGST@5%</th><th>FOB</th><th>DBK</th><th>RoDTEP</th><th>Source</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="preservation-note">
+        <span>✓</span><div><strong>Safe append guarantee</strong><small>Only recognized headers are written. Existing values in user-created columns are never cleared; formulas in manual columns flow into genuinely new rows.</small></div>
+      </div>
+      <div class="action-row final-actions">
+        <button id="clearReview" class="button ghost" type="button">Clear batch</button>
+        <button id="appendButton" class="button primary wide" type="button">Append to master Excel</button>
+      </div>
+    </section>
+
+    <section id="successPanel" class="success-panel hidden">
+      <div class="success-icon">✓</div>
+      <div><p class="eyebrow">MASTER UPDATED</p><h2 id="successTitle">Your workbook is ready.</h2><p id="successText"></p></div>
+      <a class="button gold" href="/api/download/master">Download updated Excel</a>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status"></div>
+  <div id="busy" class="busy hidden"><div class="spinner"></div><strong>Reading the documents…</strong><small>Applying the local extraction rules</small></div>
+  <script src="app.js"></script>
+</body>
+</html>
